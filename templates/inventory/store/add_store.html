@@ -1,0 +1,65 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %}Add Store{% endblock title %}
+{% block contener %}
+
+<div class="page-header">
+    <h3 class="page-title"> Add Store </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Store</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add Store</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="color: black;">Add Store</h4>
+                <br>
+                <form class="forms-sample" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label for="name-field"><strong style="color: black;">Name :</strong>
+                                    <span style="color: crimson;">{{ form.name.errors }}</span>
+                                </label>
+                                <input type="text" class="form-control" id="name-field" placeholder="Name" name="name">
+                            </div>
+                        </div>
+
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label for="location-field"><strong style="color: black;">location :</strong>
+                                    <span style="color: crimson;">{{ form.location.errors }}</span></label>
+                                <input name="location" class="form-control" id="location-field" placeholder="Location">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+
+                            <div class="form-group">
+                                <label for="max_capacity-field"><strong style="color: black;">Max Capacity :</strong>
+                                    <span style="color: crimson;">{{ form.max_capacity.errors }}</span>
+                                </label>
+                                <input type="text" class="form-control" id="max_capacity-field"
+                                    placeholder="Max Capacity" name="max_capacity">
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock contener %}
+{% block javascripts %}
+
+{% endblock javascripts %}

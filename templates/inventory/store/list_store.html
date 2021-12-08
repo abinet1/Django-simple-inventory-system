@@ -1,0 +1,50 @@
+{% extends "layouts/base.html" %}
+{% block title%}Store List{% endblock title %}
+{% block contener %}
+<div class="page-header">
+    <h3 class="page-title"> Store Table</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Stores List Table</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Stores List Table</h4>
+                <p class="card-description"> To add store go to <code>add store</code> in the side bar.
+                </p>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> Name </th>
+                            <th> Location </th>
+                            <th> Max Capacity </th>
+                            <th> Items count <br>in store </th>
+                            <th> Registered by </th>
+                            <th> Actions </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for store in object_list %}
+                        <tr>
+                            <td class="py-1">{{ forloop.counter }}</td>
+                            <td>{{ store.name }}</td>
+                            <td>{{ store.location }}</td>
+                            <td>{{ store.max_capacity }}</td>
+                            <td></td>
+                            <td>{{ store.user }}</td>
+                            <td> </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contener %}

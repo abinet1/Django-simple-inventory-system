@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authentication',
+    'authentications',
     'inventory'
 ]
 
@@ -55,6 +55,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+ 'django.contrib.auth.backends.ModelBackend',
 ]
 
 ROOT_URLCONF = 'Django_Simple_Inventory_System.urls'
@@ -87,6 +91,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 # Password validation
@@ -145,7 +150,7 @@ else:
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # authentication 
-AUTH_USER_MODEL = 'authentication.User'
+AUTH_USER_MODEL = 'authentications.user'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

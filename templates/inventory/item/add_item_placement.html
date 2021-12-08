@@ -1,0 +1,102 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %}Add Item{% endblock title %}
+{% block contener %}
+<style>
+    .nodis {
+        display: none;
+    }
+</style>
+<div class="page-header">
+    <h3 class="page-title"> Add Items </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Form elements</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <ul id="section-tabs">
+                    <li>
+                        <span>1.</span> Basic Information
+                    </li>
+                    <li class="current active">
+                        <span>2. </span> Store and Shelf
+                    </li>
+                    <li>
+                        <span>3.</span> Measurement
+                    </li>
+                    <!-- <li><span>4.</span> Last Words</li> -->
+                </ul>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="col-12"
+                        style="border: solid 1px #c4cacf; padding:10px; padding-top: 30px;padding-bottom: 30px;margin-left: 2px; margin-bottom: 10px;">
+                        <div class="col-12" style="margin-bottom: 10px;">
+                            <div class=" form-group">
+                                <div class="row" style="margin-left: 10px;">
+                                    <h4 class="card-title">
+                                        Placement Information
+                                    </h4>
+                                </div>
+                                <div class="col-12" style="display: flex; padding-left: 0;padding-right: 0;">
+                                    <div class="form-group col-4">
+                                        <label for="store-field">Store</label>
+                                        <select class="form-control" id="store-field" name="store">
+                                            <option value="no-value">pleace Select Store</option>
+                                            {% for store in stores %}
+                                            <option value="{{ store.id }}" id="store-{{shelf.id}}"
+                                                onclick='store_selected("{{ store.id }}" )'>{{store}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label for="shelf-field">Shelf</label>
+                                        <select class="form-control" id="shelf-field" name="shelf">
+                                            <option value="no-value">pleace Select Shelf</option>
+                                            {% for shelf in shelfs %}
+                                            <option class="option" value="{{ shelf.id }}"
+                                                id="shelf-{{shelf.id}}-{{ shelf.store.id }}">
+                                                {{shelf}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2" style="width: 150px;margin-top: 10px;">
+                        Add placement
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock contener %}
+{% block javascripts %}
+<script>
+    function store_selected(store_id) {
+        var options = document.getElementsByClassName("option");
+        console.log(options)
+        for (option in options) {
+            var opt_id = options[option].attributes.id.value;
+            var val = opt_id.split('-');
+            console.log(val);
+            if (val[2] != store_id) {
+                options[option].setAttribute('style', "display:none;");
+                console.log(options[option].attributes.class.value);
+            } else {
+                options[option].setAttribute('style', "display:initial;");
+                console.log(options[option].attributes.class.value);
+            }
+        }
+    }
+</script>
+{% endblock javascripts %}

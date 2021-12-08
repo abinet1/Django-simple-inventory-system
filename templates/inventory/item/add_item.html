@@ -1,0 +1,125 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %}Add Item{% endblock title %}
+{% block contener %}
+
+<div class="page-header">
+    <h3 class="page-title"> Add Items </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Form elements</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <ul id="section-tabs">
+                    <li class="current active">
+                        <span>1.</span> Basic Information
+                    </li>
+                    <li>
+                        <span>2.</span> Measurement
+                    </li>
+                    <li>
+                        <span>3.</span> Store and Shelf
+                    </li>
+                    <!-- <li><span>4.</span> Last Words</li> -->
+                </ul>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class=" form-group"
+                                style="border: solid 1px #c4cacf; padding:10px; padding-top: 30px;padding-bottom: 30px;margin-left: 2px;">
+                                <div class="row" style="margin-left: 10px;">
+                                    <h4 class="card-title">Besic Information</h4>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="name-field">Name: <code>{{form.name.errors}}</code></label>
+                                    <input type="text" class="form-control" id="name-field" placeholder="Name"
+                                        name="name">
+                                </div>
+                                <div class="col-12" style="display: flex; padding-left: 0;padding-right: 0;">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="quantity-field">Quantity:
+                                                <code>{{form.quantity.errors}}</code></label>
+                                            <input type="number" class="form-control" id="quantity-field"
+                                                placeholder="Quantity" name="quantity">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="catagory-field">
+                                                Catagory: <code>{{form.catagory.errors}}</code>
+                                            </label>
+                                            <select class="form-control" id="catagory-field" name="catagory">
+                                                <option value="no-value">pleace Select catagory</option>
+                                                {% for catagory in catagories %}
+                                                <option value="{{ catagory.id }}">{{catagory}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>
+                                                Upload Image: <code>{{form.image.errors}}</code>
+                                            </label>
+                                            <input class="form-control" type="file" name="image">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12" style="display: flex; padding-left: 0;padding-right: 0;">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="cost-field">
+                                                Cost: <span>{{form.cost.errors}}</span>
+                                            </label>
+                                            <input type="number" class="form-control" id="cost-field" placeholder="Cost"
+                                                name="cost">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="color-field">
+                                                color: <code>{{form.color.errors}}</code>
+                                            </label>
+                                            <input type="Integer" class="form-control" id="color-field"
+                                                placeholder="Color" name="color">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="description-field">
+                                            Description: <code>{{form.description.errors}}</code>
+                                        </label>
+                                        <textarea class="form-control" id="description-field" name="description"
+                                            rows="8"> describe the image clearly.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a style="width: 100px; margin-right: 10px; margin-top: 10px; " class="btn btn-light mr-2"
+                        type="menu">Back</a>
+                    <button type="submit" class="btn btn-primary mr-2" style="width: 100px;  margin-top: 10px;">
+                        Submit
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock contener %}
+{% block javascripts %}
+
+{% endblock javascripts %}

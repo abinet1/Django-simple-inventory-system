@@ -1,0 +1,99 @@
+function basic_information_display(liitem) {
+var section_tabs = document.getElementById("section-tabs");
+
+var section_tabs_basic_information = document.getElementById("section-tabs-basic-information");
+var section_tabs_measurement_information = document.getElementById("section-tabs-measurement-information");
+var section_tabs_placement_information = document.getElementById("section-tabs-placement-information");
+
+var basic_information = document.getElementById("basic-information");
+var measurement_information = document.getElementById("measurement-information");
+var placement_information = document.getElementById("placement-information");
+
+var basic_information_next_btn = document.getElementById("basic-information-next-btn");
+var basic_information_back_btn = document.getElementById("basic-information-back-btn");
+var measurement_information_back_btn = document.getElementById("measurement-information-back-btn");
+var measurement_information_next_btn = document.getElementById("measurement-information-next-btn");
+var placement_information_back_btn = document.getElementById("placement-information-back-btn");
+var placement_information_next_btn = document.getElementById("placement-information-next-btn");
+
+basic_information_back_btn.style.display = "initial";
+basic_information_next_btn.style.display = "initial";
+measurement_information_back_btn.style.display = "none";
+measurement_information_next_btn.style.display = "none";
+placement_information_back_btn.style.display = "none";
+placement_information_next_btn.style.display = "none";
+
+basic_information.style.display = "initial";
+measurement_information.style.display = "none";
+placement_information.style.display = "none";
+
+section_tabs_basic_information.classList.add("current", "active");
+section_tabs_measurement_information.classList.remove("current", "active");
+section_tabs_placement_information.classList.remove("current", "active");
+
+}
+function measurement_information_display(liitem) {
+var section_tabs_basic_information = document.getElementById("section-tabs-basic-information");
+var section_tabs_measurement_information = document.getElementById("section-tabs-measurement-information");
+var section_tabs_placement_information = document.getElementById("section-tabs-placement-information");
+
+var basic_information = document.getElementById("basic-information");
+var measurement_information = document.getElementById("measurement-information");
+var placement_information = document.getElementById("placement-information");
+
+var basic_information_next_btn = document.getElementById("basic-information-next-btn");
+var basic_information_back_btn = document.getElementById("basic-information-back-btn");
+var measurement_information_back_btn = document.getElementById("measurement-information-back-btn");
+var measurement_information_next_btn = document.getElementById("measurement-information-next-btn");
+var placement_information_back_btn = document.getElementById("placement-information-back-btn");
+var placement_information_next_btn = document.getElementById("placement-information-next-btn");
+
+basic_information_back_btn.style.display = "none";
+basic_information_next_btn.style.display = "none";
+measurement_information_back_btn.style.display = "initial";
+measurement_information_next_btn.style.display = "initial";
+placement_information_back_btn.style.display = "none";
+placement_information_next_btn.style.display = "none";
+
+basic_information.style.display = "none";
+measurement_information.style.display = "initial";
+placement_information.style.display = "none";
+
+section_tabs_basic_information.classList.remove("current", "active");
+section_tabs_measurement_information.classList.add("current", "active");
+section_tabs_placement_information.classList.remove("current", "active");
+
+}
+function placement_information_display(liitem) {
+var section_tabs = document.getElementById("section-tabs");
+
+var section_tabs_basic_information = document.getElementById("section-tabs-basic-information");
+var section_tabs_measurement_information = document.getElementById("section-tabs-measurement-information");
+var section_tabs_placement_information = document.getElementById("section-tabs-placement-information");
+
+var basic_information = document.getElementById("basic-information");
+var measurement_information = document.getElementById("measurement-information");
+var placement_information = document.getElementById("placement-information");
+
+var basic_information_next_btn = document.getElementById("basic-information-next-btn");
+var basic_information_back_btn = document.getElementById("basic-information-back-btn");
+var measurement_information_back_btn = document.getElementById("measurement-information-back-btn");
+var measurement_information_next_btn = document.getElementById("measurement-information-next-btn");
+var placement_information_back_btn = document.getElementById("placement-information-back-btn");
+var placement_information_next_btn = document.getElementById("placement-information-next-btn");
+
+basic_information_back_btn.style.display = "none";
+basic_information_next_btn.style.display = "none";
+measurement_information_back_btn.style.display = "none";
+measurement_information_next_btn.style.display = "none";
+placement_information_back_btn.style.display = "initial";
+placement_information_next_btn.style.display = "initial";
+
+basic_information.style.display = "none";
+measurement_information.style.display = "none";
+placement_information.style.display = "initial";
+
+section_tabs_basic_information.classList.remove("current", "active");
+section_tabs_measurement_information.classList.remove("current", "active");
+section_tabs_placement_information.classList.add("current", "active");
+}

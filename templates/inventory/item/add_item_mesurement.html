@@ -1,0 +1,95 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %}Add Item{% endblock title %}
+{% block contener %}
+
+<div class="page-header">
+    <h3 class="page-title"> Add Items </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Form elements</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <ul id="section-tabs">
+                    <li>
+                        <span>1.</span> Basic Information
+                    </li>
+                    <li class="current active">
+                        <span>2.</span> Measurement
+                    </li>
+                    <li>
+                        <span>3.</span> Store and Shelf
+                    </li>
+                    <!-- <li><span>4.</span> Last Words</li> -->
+                </ul>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="col-12" style="border: solid 1px #c4cacf;margin-bottom: 10px;">
+                        <div class="row form-group" style="padding: 20px;">
+                            <div class="col-12">
+                                <h4>
+                                    Mesurment Information
+                                </h4>
+                            </div>
+                            <br>
+                            <div class="col-12 row" id="measurement-card" style="display: flex;">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="measurement-1-field">Measurement</label>
+                                            <select class="form-control" id="measurement-1-field"
+                                                name="measurement-1-field">
+                                                <option value="">pleace Select Measurement</option>
+                                                <option value="">pleace Select Measurement</option>
+                                                <option value="">pleace Select Measurement</option>
+                                                <option value="">pleace Select Measurement</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="value-1-field">Value</label>
+                                            <input type="text" class="form-control" id="value-1-field"
+                                                placeholder="Value" name="value-1-field">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <span onclick="add_measurement_field(this)" class="btn btn-success mr-2"
+                                style="width: 100px; margin-left: 10px;">
+                                <span class="icon-bg">
+                                    <i class="mdi mdi-library-plus menu-icon"></i>
+                                    Add more</span></span>
+                            <br>
+                        </div>
+                    </div>
+                    <span style="width: 100px; margin-right: 10px; margin-top: 10px;"
+                        id="placement-information-back-btn" class="btn btn-light mr-2" type="menu">Back</span>
+                    <button type="submit" class="btn btn-primary mr-2" style="width: 100px; margin-top: 10px;">
+                        Submit
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock contener %}
+{% block javascripts %}
+
+<script>
+    var measurement_field_count = 2;
+    function add_measurement_field(card) {
+        var measurement_card = document.getElementById("measurement-card");
+        measurement_card.innerHTML += "<div class='form-group col-md-6'><div class='row'><div class='col-6'><label for='measurement-" + measurement_field_count.toString() + "-field'>Measurement</label><select class='form-control' id='measurement-" + measurement_field_count.toString() + "-field' name='measurement-" + measurement_field_count.toString() + "-field'><option value='no-value'>pleace Select Store</option></select></div><div class='col-6'><label for='value-" + measurement_field_count.toString() + "-field'>Value</label><input type='text' class='form-control' id='value-" + measurement_field_count.toString() + "-field' placeholder='Value' name='value-" + measurement_field_count.toString() + "-field'></div></div></div>";
+        measurement_field_count = measurement_field_count + 1;
+    }
+</script>
+{% endblock javascripts %}
