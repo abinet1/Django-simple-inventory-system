@@ -60,9 +60,8 @@ class Items(models.Model):
     description = models.TextField(default="Measurement")
     
     def __str__(self):
-        return f'{self.name}-size{self.width}*{self.hight}'
-
-
+        return f'{self.name}'
+        
 class Propertys(models.Model):
     item = models.ForeignKey(Items, on_delete=models.CASCADE)
     measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)

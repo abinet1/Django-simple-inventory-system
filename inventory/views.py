@@ -1,4 +1,5 @@
 from json.encoder import JSONEncoder
+from django.core.checks import messages
 from django.db import models
 from django.forms.forms import Form
 from django.http import request
@@ -67,13 +68,36 @@ class Add_placement_value(LoginRequiredMixin, TemplateView):
 
 class Add_measurement_value(LoginRequiredMixin, ListView):
     model = inv_models.Items
-    # form_class = inv_forms.Add_items_form
-    template_name = "inventory/item/list_item.html"
-    # success_url = reverse_lazy("List_items")
+    template_name = "inventory/item/add_item_mesurement.html"
+   
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "measurements":inv_models.Measurement.objects.all(),
+        })
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        # print(request.POST)
+        for measurement in request.POST:
+            if request.POST.get('csrfmiddlewaretoken') != request.POST.get(measurement) and '' != request.POST.get(measurement):
+                measurement_value = measurement.split('-')
+                property = inv_models.Propertys(item=inv_models.Items.objects.get(id=int(kwargs['pk'])), measurement=inv_models.Measurement.objects.get(id=int(measurement_value[1])), value=request.POST.get(measurement))
+                property.save()
+            
+        return redirect(reverse_lazy("List_items"))
     
 class List_items(LoginRequiredMixin, ListView):
     template_name = "inventory/item/list_item.html"
     model = inv_models.Items
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "measurements":inv_models.Measurement.objects.all(),
+            "properties":inv_models.Propertys.objects.all(),
+        })
+        return context
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list measurement ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Add_measurements(LoginRequiredMixin, CreateView):

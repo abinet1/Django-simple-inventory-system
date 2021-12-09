@@ -21,16 +21,40 @@
                     <thead>
                         <tr>
                             <th> # </th>
+                            <th> Image </th>
                             <th> Name </th>
-                            <th> Description </th>
+                            <th> Quantity </th>
+                            <th> Cost </th>
+                            <th> Date </th>
+                            <th> Color </th>
+                            <th> Store </th>
+                            <th> Shelf </th>
+                            <!-- <td >&nbsp;</td> -->
+                            <th colspan="2"> Measurement </th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for item in object_list %}
                         <tr>
                             <td class="py-1">{{ forloop.counter }}</td>
+                            <td>
+                                <img src="{{ item.image.url }}" style="border-radius: 0px;" width="100px" height="auto"
+                                    alt="No image avalable">
+                            </td>
                             <td>{{ item.name }}</td>
-                            <td>{{ item.description }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.cost }}</td>
+                            <td>{{ item.date }}</td>
+                            <td>{{ item.color }}</td>
+                            <td>{{ item.store }}</td>
+                            <td>{{ item.shelf }}</td>
+                            <td>
+                                {% for property in properties%}
+                                {% if property.item == item %}
+                                {{ property }} ,
+                                {% endif %}
+                                {% endfor %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
