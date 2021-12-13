@@ -31,9 +31,9 @@ class Add_mesurement_form(forms.ModelForm):
         model = inv_models.Measurement
         fields = "__all__"
 
-class Add_catagory_form(forms.ModelForm):
+class Add_category_form(forms.ModelForm):
     class Meta:
-        model = inv_models.Catagory
+        model = inv_models.Category
         fields = "__all__"
 
 class Add_store_form(forms.ModelForm):

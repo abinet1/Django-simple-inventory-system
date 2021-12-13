@@ -54,13 +54,13 @@
 
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label for="catagory-field">
-                                                Catagory: <code>{{form.catagory.errors}}</code>
+                                            <label for="category-field">
+                                                Category: <code>{{form.category.errors}}</code>
                                             </label>
-                                            <select class="form-control" id="catagory-field" name="catagory">
-                                                <option value="no-value">pleace Select catagory</option>
-                                                {% for catagory in catagories %}
-                                                <option value="{{ catagory.id }}">{{catagory}}</option>
+                                            <select class="form-control" id="category-field" name="category">
+                                                <option value="no-value">pleace Select category</option>
+                                                {% for category in categories %}
+                                                <option value="{{ category.id }}">{{category}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>

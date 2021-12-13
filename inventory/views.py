@@ -39,7 +39,7 @@ class Add_items(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({"catagories":inv_models.Catagory.objects.all()})
+        context.update({"categories":inv_models.Category.objects.all()})
         return context
 
     def get_success_url(self):
@@ -115,16 +115,16 @@ class List_measurements(LoginRequiredMixin, ListView):
 
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list measurement ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
-class Add_catagories(LoginRequiredMixin, CreateView):
-    model = inv_models.Catagory
-    form_class = inv_forms.Add_catagory_form
-    template_name = "inventory/catagory/add_catagory.html"
-    success_url = reverse_lazy("List_catagories")
+class Add_categories(LoginRequiredMixin, CreateView):
+    model = inv_models.Category
+    form_class = inv_forms.Add_category_form
+    template_name = "inventory/category/add_category.html"
+    success_url = reverse_lazy("List_categories")
 
     
-class List_catagories(LoginRequiredMixin, ListView):
-    model = inv_models.Catagory
-    template_name = "inventory/catagory/list_catagory.html"
+class List_categories(LoginRequiredMixin, ListView):
+    model = inv_models.Category
+    template_name = "inventory/category/list_category.html"
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list store ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Add_store(LoginRequiredMixin, CreateView):

@@ -28,9 +28,9 @@ class Shelf(models.Model):
     def __str__(self):
         return f'{ self.store.name }-{ self.name }'
     
-class Catagory(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=500)
-    description = models.TextField(default="Catagory")
+    description = models.TextField(default="Category")
     
     def __str__(self):
         return self.name
@@ -47,8 +47,8 @@ class Items(models.Model):
     quantity = models.IntegerField(validators=[MinValueValidator(0)])
     color = models.CharField(max_length=100, null=True)
     # hight width thickness 
-    catagory = models.ForeignKey(
-        Catagory,
+    category = models.ForeignKey(
+        Category,
         models.SET_NULL,
         blank=True,
         null=True

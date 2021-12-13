@@ -27,6 +27,6 @@ urlpatterns = [
     
     path('error/capacity_error',inventory_views.Capacity_error.as_view(), name="Capacity_error"),
     
-    path('catagories/add/', inventory_views.Add_catagories.as_view(), name="Add_catagories"),
-    path('catagories/list/', inventory_views.List_catagories.as_view(), name="List_catagories"),
+    path('categories/add/', inventory_views.Add_categories.as_view(), name="Add_categories"),
+    path('categories/list/', inventory_views.List_categories.as_view(), name="List_categories"),
 ]
