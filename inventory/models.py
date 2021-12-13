@@ -2,6 +2,7 @@ from django.core import validators
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models.deletion import CASCADE
+from django.db.models.fields import DateField
 from authentications import models as auth_models
 # Create your models here.
 
@@ -69,4 +70,37 @@ class Propertys(models.Model):
 
     def __str__(self):
         return f'{self.measurement}-{self.value}'
+
+class Request(models.Model):
+    STATUS = (
+        ('Pending','Pending'),
+        ('Approved','Approve'),        
+        ('Declined','Declined'),  
+        ('Deleted','Deleted'),      
+    )
+    # TYPE=(
+    #     ('Purchase Request','Purchase Request'),
+    #     ('Store Request','Store Request'),
+    # )
+    request_date = models.DateField(auto_now_add=True)
+    approved_date = models.DateField(null=True)
+    status = models.CharField(choices=STATUS, max_length=100, default='Pending')
+    # type = models.CharField(choices=TYPE, max_length=100, default='Receive')
+    request_by = models.ForeignKey(auth_models.User, on_delete=CASCADE, related_name='request_user')
+    approved_by = models.ForeignKey(auth_models.User, on_delete=CASCADE, null=True, blank=True, related_name='approve_user')
+    remark = models.TextField(default="for production purpuses.")
+
+    def __str__(self):
+        return f'{self.request_by}-{self.request_date}'
+
+class RequestRow(models.Model):
+    item = models.ForeignKey(Items, on_delete=models.CASCADE)
+    request = models.ForeignKey(Request, on_delete=models.CASCADE)
+    requested_amount = models.IntegerField(validators=[MinValueValidator(1)])
+    approved_amount = models.IntegerField(validators=[MinValueValidator(0)], null=True)
+
+    def __str__(self):
+        return f'{self.item}-{self.requested_amount}'
+
+    
         

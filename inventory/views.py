@@ -1,6 +1,9 @@
 from json.encoder import JSONEncoder
+import json
+
 from django.core.checks import messages
 from django.db import models
+from django.db.models.query import QuerySet
 from django.forms.forms import Form
 from django.http import request
 from django.shortcuts import redirect, render
@@ -168,6 +171,55 @@ class Add_shelf(LoginRequiredMixin, CreateView):
 class List_shelf(LoginRequiredMixin, ListView):
     model = inv_models.Shelf
     template_name = "inventory/shelf/list_shelf.html"
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Add and List request ++++++++++++++++++++++++++++++++++++++++++++
+class Add_request(LoginRequiredMixin, TemplateView):
+    template_name = "inventory/request/add_request.html"
+    # model = inv_models.Request
+    success_url = reverse_lazy("List_request")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "formset":inv_forms.Add_requestrow_formset(),
+            "user":self.request.user,
+            "items":inv_models.Items.objects.all(),
+            "request_notifications":inv_models.Request.objects.filter(status="Pending"),
+        })
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        # print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        # print(request.body)
+        # res2 = json.loads(request.body.decode("utf-8"))
+        post_data = json.loads(request.body.decode("utf-8"))
+        request_model = inv_models.Request(request_by = self.request.user)
+        request_model.remark = post_data["remark"]
+        request_model.save()
+        items = {}
+
+        for data in post_data["data"]:
+            item = inv_models.Items.objects.get(id=post_data["data"][data]["item_label"])
+            if item in items:
+                items[item]+= int(post_data["data"][data]['quantity_label'])
+            else:
+                items[item] = int(post_data["data"][data]['quantity_label'])
+        for row in items:
+            requestrow_model= inv_models.RequestRow(item=row, request = request_model, requested_amount=items[row])    
+            requestrow_model.save()
+        return redirect(reverse_lazy("List_request"))
+        # return super().post(request, *args, **kwargs)
+
+
+class List_request(LoginRequiredMixin, ListView):
+    template_name = "inventory/request/list_request.html"
+    model = inv_models.Request
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "request_notifications":len(inv_models.Request.objects.filter(status="Pending")),
+        })
+        return context
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Errors ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Capacity_error(LoginRequiredMixin, TemplateView):

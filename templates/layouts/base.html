@@ -351,15 +351,18 @@
                             aria-controls="nav-request">
                             <span class="icon-bg"><i class="mdi mdi-flattr menu-icon"></i></span>
                             <span class="menu-title">Request</span>
+                            {% if request_notifications > 0 %}
+                            <div class="badge badge-danger">{{ request_notifications }}</div>
+                            {% endif %}
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="collapse" id="nav-request">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="pages/ui-features/dropdowns.html">Add Request</a>
+                                    <a class="nav-link" href="{% url 'Add_request' %}">Add Request</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="pages/ui-features/typography.html">List Request</a>
+                                    <a class="nav-link" href="{% url 'List_request' %}">List Request</a>
                                 </li>
                             </ul>
                         </div>

@@ -1,0 +1,169 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %}Create Request{% endblock title %}
+{% block contener %}
+
+<div class="page-header">
+    <h3 class="page-title"> Create Request </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Request</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Create Request</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="color: black;">Create Request</h4>
+                <br><br><br>
+                <form class="forms-sample" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-4" style="display:flex;">
+                            <div class="form-group" style="margin-left: auto;">
+                                <label for="name-field">Name:</label>
+                                <h4 name="name-field" style="color: black;">{{user.username}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-6" style="display:flex;">
+                            <div class="form-group" style="margin-right:auto;">
+                                <label for="request-date-field">Request Date:</label>
+                                <h4 style="color: black;"><time id="request-date-field"
+                                        datetime="YYYY-MM-DDThh:mm:ssTZD"></h4>
+                            </div>
+                        </div>
+                        <div class="col-4" style="display:flex;">
+                            <div class="form-group" style="margin-left: auto;">
+                                <label for="name-field">Status:</label>
+                                <h4 style="color: black;">Pending</h4>
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-6" style="display:flex;">
+                            <div class="form-group" style="margin-right:auto;">
+                                <label for="remark-field">Remark:</label>
+                                <textarea name="remark" class="form-control" id="remark-field" rows="3"
+                                    placeholder="Description/remark"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 grid-margin stretch-card">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Item</th>
+                                        <th>Required amount</th>
+                                        <th>On hand</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="request-form-table">
+                                    <tr class="trrow">
+                                        <td style="width: 50px;">
+                                            <span>1</span>
+                                        </td>
+                                        <td>
+                                            <select class="form-control" style="border:none;" id="form-0-item">
+                                                <option>select item</option>
+                                                {% for item in items %}
+                                                <option value="{{item.id}}">{{ item }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="number" id="form-0-quantity">
+                                        </td>
+                                        <td>
+                                            <p></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <button type="button" onclick="addrow()" class="btn btn-primary mr-2" style="width: 100px;">
+                        <i class="mdi mdi-library-plus"></i>Add More</button>
+                    <button type="button" onclick="submit_btn()" class="btn btn-primary mr-2"
+                        style="width: 100px;">Submit</button>
+                    <!-- <button class="btn btn-light">Cancel</button> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock contener %}
+{% block javascripts %}
+<script>
+    var request_date = document.getElementById("request-date-field");
+    date = new Date();
+    request_date.innerHTML = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate() + "  " + date.getHours() + ':' + date.getMinutes();
+    var form_number = 1;
+
+    function addrow() {
+        var row = document.createElement('tr');
+        row.classList.add("trrow");
+        row.innerHTML = `<td style='width: 50px;'><span>${form_number + 1}</span></td><td><select class='form-control' style='border:none;' id='form-${form_number}-item' name='form-${form_number}-item'><option >select item</option>{% for item in items %}<option value='{{item.id}}'>{{ item }}</option>{% endfor %}</select></td><td><input name='form-${form_number}-quantity' id='form-${form_number}-quantity' class='form-control' type='text'></td><td><p></p></td>`;
+        var request_form_table = document.getElementById("request-form-table");
+        request_form_table.append(row);
+        form_number += 1;
+    }
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function submit_btn() {
+        var data = {}
+
+        for (i = 0; i < form_number; i++) {
+            var item_value = document.getElementById('form-' + i.toString() + '-item').value;
+            var item_label = 'form-' + i.toString() + '-item'
+            var quantity_value = document.getElementById('form-' + i.toString() + '-quantity').value;
+            var quantity_label = 'form-' + i.toString() + '-quantity'
+            if (quantity_value > 0) {
+                var line = {
+                    item_label: item_value,
+                    quantity_label: quantity_value,
+                }
+                console.log(line)
+
+                data["form-" + i.toString()] = line
+            }
+        }
+        console.log(data)
+        const csrftoken = getCookie('csrftoken');
+        fetch("{% url 'Add_request' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "X-CSRFToken": csrftoken,
+            },
+            body: JSON.stringify({
+                'remark': document.getElementById("remark-field").value,
+                'data': data
+            })
+        }).then(function (response) {
+            location.replace("{% url 'List_request' %}")
+        });
+    }
+
+
+</script>
+{% endblock javascripts %}

@@ -46,4 +46,12 @@
 	 border: 15px solid transparent;
 	 border-left: 15px solid #2cbab2;
 }
- 
+
+.trrow{
+	padding: 0px;
+	border: none;
+}
+.trrow input{
+	border: none;
+	margin: 0px;
+}
