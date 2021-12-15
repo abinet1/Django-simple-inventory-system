@@ -75,7 +75,9 @@ class Request(models.Model):
     STATUS = (
         ('Pending','Pending'),
         ('Approved','Approve'),        
-        ('Declined','Declined'),  
+        ('Declined','Declined'),       
+        ('On hold','On hold'),       
+        ('Suspended','Suspended'),  
         ('Deleted','Deleted'),      
     )
     # TYPE=(

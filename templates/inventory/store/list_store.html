@@ -32,13 +32,21 @@
                     <tbody>
                         {% for store in object_list %}
                         <tr>
-                            <td class="py-1">{{ forloop.counter }}</td>
-                            <td>{{ store.name }}</td>
-                            <td>{{ store.location }}</td>
-                            <td>{{ store.max_capacity }}</td>
+                            <td class="py-1">
+                                {{ forloop.counter }}
+                            </td>
+                            <td><a href="{% url 'Detail_store' pk=store.id %}">{{ store.name }}</a></td>
+                            <td><a href="{% url 'Detail_store' pk=store.id %}">{{ store.location }}</a></td>
+                            <td><a href="{% url 'Detail_store' pk=store.id %}">{{ store.max_capacity }}</a></td>
                             <td></td>
-                            <td>{{ store.user }}</td>
-                            <td> </td>
+                            <td><a href="{% url 'Detail_store' pk=store.id %}">{{ store.user }}</a></td>
+                            <td>
+                                <a href="{% url 'Update_store' pk=store.id %}">
+                                    <!-- <i class="mdi mdi-lead-pencil">Edit</i> -->
+                                    <!-- <i class="mdi mdi-pencil">Edit</i> -->
+                                    <i class="mdi mdi-pencil-outline"></i> Edit
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

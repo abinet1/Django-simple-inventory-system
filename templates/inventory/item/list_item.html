@@ -31,6 +31,7 @@
                             <th> Shelf </th>
                             <!-- <td >&nbsp;</td> -->
                             <th> Measurement </th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,22 +39,72 @@
                         <tr>
                             <td class="py-1">{{ forloop.counter }}</td>
                             <td>
-                                <img src="{{ item.image.url }}" style="border-radius: 0px;" width="100px" height="auto"
-                                    alt="No image avalable">
+                                <a href="{% url 'Detail_item' pk=item.id %}" style="text-decoration: none;">
+                                    <img src="{{ item.image.url }}" style="border-radius: 0px;" width="100px"
+                                        height="auto" alt="No image avalable">
+                                </a>
                             </td>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.quantity }}</td>
-                            <td>{{ item.cost }}</td>
-                            <td>{{ item.date }}</td>
-                            <td>{{ item.color }}</td>
-                            <td>{{ item.store }}</td>
-                            <td>{{ item.shelf }}</td>
+                            <td>
+                                <a href="{% url 'Detail_item' pk=item.id %}" style="text-decoration-color: black;">
+                                    <span style="text-decoration-color: black;">
+                                        {{ item.name }}
+                                    </span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'Detail_item' pk=item.id %}" style="text-decoration-color: black;">
+                                    <span style="text-decoration-color: black;">
+                                        {{ item.quantity }}
+                                    </span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'Detail_item' pk=item.id %}" style="text-decoration-color: black;">
+                                    <span style="text-decoration-color: black;">
+                                        {{ item.cost }}
+                                    </span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'Detail_item' pk=item.id %}" style="text-decoration-color: black;">
+                                    <span style="text-decoration-color: black;">
+                                        {{ item.date }}
+                                    </span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'Detail_item' pk=item.id %}" style="text-decoration-color: black;">
+                                    <span style="text-decoration-color: black;">
+                                        {{ item.color }}
+                                    </span>
+                                </a>
+                            </td>
+                            <td>{% if item.store == None %}
+                                <a href="" style="color: #696969;">insert</a>
+                                {% else%}
+                                {{ item.store }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.shelf == None %}
+                                <a href="" style="color: #696969;">insert</a>
+                                {% else%}
+                                {{ item.shelf }}
+                                {% endif %}
+                            </td>
                             <td>
                                 {% for property in properties%}
                                 {% if property.item == item %}
                                 {{ property }} ,
                                 {% endif %}
                                 {% endfor %}
+                            </td>
+                            <td>
+                                <a href="{% url 'Update_item' pk=item.id %}">
+                                    <!-- <i class="mdi mdi-lead-pencil">Edit</i> -->
+                                    <!-- <i class="mdi mdi-pencil">Edit</i> -->
+                                    <i class="mdi mdi-pencil-outline"></i> Edit
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.fields import TextField
 from django.forms import fields, widgets
 from django.forms import formset_factory
+from dal import autocomplete
 
 from inventory import models as inv_models
 
@@ -47,4 +48,28 @@ class Add_shelf_form(forms.ModelForm):
         model = inv_models.Shelf
         fields = "__all__"
         widgets={"description":forms.Textarea(attrs={'required':'False'})}
+
+
+class Update_item_form(forms.ModelForm):
+    class Meta:
+        model = inv_models.Items
+        fields = "__all__"
+        exclude = ["shelf","store"]
+
+class Update_store_form(forms.ModelForm):
+    class Meta:
+        model = inv_models.Store
+        fields = ["name","location","max_capacity"]
+
+class Update_shelf_form(forms.ModelForm):
+    class Meta:
+        model = inv_models.Shelf
+        fields = "__all__"
+
+class Test_form(forms.ModelForm):
+    class Meta:
+        model = inv_models.Propertys
+        fields = "__all__"
+        
+
         

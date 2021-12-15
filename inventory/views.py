@@ -11,7 +11,8 @@ from django.utils.translation import templatize
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
 from django.views.generic import CreateView
-from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.detail import DetailView, SingleObjectMixin
+from django.views.generic.edit import UpdateView
 from inventory import models as inv_models
 from inventory import forms as inv_forms
 from authentications import models as auth_models
@@ -29,7 +30,12 @@ class Home(LoginRequiredMixin, TemplateView ):
 #  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ test classes ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Test(LoginRequiredMixin, TemplateView):
     template_name = "pages/table.html"
-
+    model = inv_models.Propertys
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({"form":inv_forms.Test_form})
+        return context
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list items ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Add_items(LoginRequiredMixin, CreateView):
@@ -101,6 +107,22 @@ class List_items(LoginRequiredMixin, ListView):
             "properties":inv_models.Propertys.objects.all(),
         })
         return context
+    
+class Update_item(LoginRequiredMixin, UpdateView):
+    template_name = "inventory/item/update_item.html"
+    model = inv_models.Items
+    form_class = inv_forms.Update_item_form
+    success_url = reverse_lazy("List_items")
+
+    def get_context_data(self, **kwargs) :
+        context = super().get_context_data(**kwargs)
+        context.update({"categories":inv_models.Category.objects.all()})
+        return context
+
+class Detail_item(LoginRequiredMixin, DetailView):
+    template_name = "inventory/item/detial_item.html"
+    model = inv_models.Items
+    success_url = reverse_lazy("List_items")
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list measurement ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Add_measurements(LoginRequiredMixin, CreateView):
@@ -114,7 +136,7 @@ class List_measurements(LoginRequiredMixin, ListView):
     template_name = "inventory/measurement/list_measurement.html"
 
 
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list measurement ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list category ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Add_categories(LoginRequiredMixin, CreateView):
     model = inv_models.Category
     form_class = inv_forms.Add_category_form
@@ -144,7 +166,17 @@ class List_store(LoginRequiredMixin, ListView):
     model = inv_models.Store
     template_name = "inventory/store/list_store.html"
 
-    
+class Detail_store(LoginRequiredMixin, DetailView):
+    model = inv_models.Store
+    template_name = "inventory/store/detail_store.html"
+    success_url = reverse_lazy("List_store")
+
+class Update_store(LoginRequiredMixin, UpdateView):
+    model = inv_models.Store
+    template_name = "inventory/store/update_store.html"
+    form_class = inv_forms.Update_store_form
+    success_url = reverse_lazy("List_store")
+
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list shelf ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Add_shelf(LoginRequiredMixin, CreateView):
     model = inv_models.Shelf
@@ -172,6 +204,21 @@ class List_shelf(LoginRequiredMixin, ListView):
     model = inv_models.Shelf
     template_name = "inventory/shelf/list_shelf.html"
 
+class Detail_shelf(LoginRequiredMixin, DetailView):
+    model = inv_models.Shelf
+    template_name = "inventory/shelf/detail_shelf.html"
+
+class Update_shelf(LoginRequiredMixin, UpdateView):
+    model = inv_models.Shelf
+    template_name = "inventory/shelf/update_shelf.html"
+    form_class = inv_forms.Update_shelf_form
+    success_url = reverse_lazy("List_shelf")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({"stores":inv_models.Store.objects.all()})
+        return context
+
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Add and List request ++++++++++++++++++++++++++++++++++++++++++++
 class Add_request(LoginRequiredMixin, TemplateView):
     template_name = "inventory/request/add_request.html"
@@ -189,9 +236,6 @@ class Add_request(LoginRequiredMixin, TemplateView):
         return context
     
     def post(self, request, *args, **kwargs):
-        # print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        # print(request.body)
-        # res2 = json.loads(request.body.decode("utf-8"))
         post_data = json.loads(request.body.decode("utf-8"))
         request_model = inv_models.Request(request_by = self.request.user)
         request_model.remark = post_data["remark"]
@@ -208,8 +252,7 @@ class Add_request(LoginRequiredMixin, TemplateView):
             requestrow_model= inv_models.RequestRow(item=row, request = request_model, requested_amount=items[row])    
             requestrow_model.save()
         return redirect(reverse_lazy("List_request"))
-        # return super().post(request, *args, **kwargs)
-
+        
 
 class List_request(LoginRequiredMixin, ListView):
     template_name = "inventory/request/list_request.html"
@@ -220,6 +263,19 @@ class List_request(LoginRequiredMixin, ListView):
             "request_notifications":len(inv_models.Request.objects.filter(status="Pending")),
         })
         return context
+
+# class Detail_request(LoginRequiredMixin, DetailView):
+#     model = inv_models.Request
+#     template_view = "inventory/request/detail_request.html"
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         # context.update({""})
+#         return context
+
+# class Update_request(LoginRequiredMixin, TemplateView):
+#     model = inv_models.Request
+#     template_name = "inventory/request/update_request.html"
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Errors ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Capacity_error(LoginRequiredMixin, TemplateView):

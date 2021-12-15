@@ -25,16 +25,40 @@
                             <th> Shelf Capacity </th>
                             <th> Store </th>
                             <th> Description </th>
+                            <th> Actions </th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for shelf in object_list %}
                         <tr>
                             <td class="py-1">{{ forloop.counter }}</td>
-                            <td>{{ shelf.name }}</td>
-                            <td>{{ shelf.max_capacity }}</td>
-                            <td>{{ shelf.store }}</td>
-                            <td>{{ shelf.description }}</td>
+                            <td>
+                                <a href="{% url 'Detail_shelf' pk=shelf.id%}">
+                                    {{ shelf.name }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'Detail_shelf' pk=shelf.id%}">
+                                    {{ shelf.max_capacity }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'Detail_shelf' pk=shelf.id%}">
+                                    {{ shelf.store }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'Detail_shelf' pk=shelf.id%}">
+                                    {{ shelf.description }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'Update_shelf' pk=shelf.id %}">
+                                    <!-- <i class="mdi mdi-lead-pencil">Edit</i> -->
+                                    <!-- <i class="mdi mdi-pencil">Edit</i> -->
+                                    <i class="mdi mdi-pencil-outline"></i> Edit
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

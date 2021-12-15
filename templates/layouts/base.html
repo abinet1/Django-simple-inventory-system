@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="{% static '/assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static '/assets/css/custom.css' %}">
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <link rel="shortcut icon" href="{% static '/assets/images/favicon.png' %} " />
     <!-- title section -->
     <title>{% block title %}{% endblock title %}</title>
@@ -274,6 +276,11 @@
                 </button>
             </div>
         </nav>
+
+
+
+
+
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
 
@@ -613,6 +620,7 @@
     <script src="{% static '/assets/js/hoverable-collapse.js' %}"></script>
     <script src="{% static '/assets/js/misc.js' %}"></script>
     <!-- endinject -->
+
 
     <!-- Custom js for this page -->
     <script src="{% static '/assets/js/file-upload.js' %}"></script>
