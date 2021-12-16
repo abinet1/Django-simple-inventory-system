@@ -1,0 +1,113 @@
+{% extends "layouts/base.html" %}
+{% block title%}Request detail{% endblock title %}
+{% block contener %}
+
+<div class="page-header">
+    <h3 class="page-title"> Request detail</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Request detail table</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Detail Request View</h4>
+                <p class="card-description"> To add Request go to <code>add Request</code> in the side bar.
+                </p>
+                <label for="title-field">Request: <h4 class="card-title" id="title-field">{{request.id}}-{{ request }}
+                    </h4>
+                </label>
+                <form class="forms-sample" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-4" style="display:flex;">
+                            <div class="form-group" style="margin-left: auto;">
+                                <label for="name-field">Name:</label>
+                                <select name="name-field" class="form-control" id="id_name" style="color: black;"
+                                    value="{{request.request_by}}">
+                                    {% for user in users %}
+                                    {% if user.id == request.request_by.id %}
+                                    <option selected value="{{user.id}}">{{ user.username }} - {{ user.username }}
+                                    </option>
+                                    {% else %}
+                                    <option value="{{user.id}}">{{ user }}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-6" style="display:flex;">
+                            <div class="form-group" style="margin-right:auto;">
+                                <label for="request-date-field">Request Date:</label>
+                                <h4 class="form-control" id="id_date" style="color: black;">{{request.request_date}}
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="col-4" style="display:flex;">
+                            <div class="form-group" style="margin-left: auto;">
+                                <label for="name-field">Status:</label>
+                                <h4 style="color: black;">{{request.status}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-6" style="display:flex;">
+                            <div class="form-group" style="margin-right:auto;">
+                                <label for="remark-field">Remark:</label>
+                                <textarea class="form-control" id="remark-field"
+                                    rows="3">{{ request.remark }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th> # </th>
+                                <th> Item </th>
+                                <th> Required Amount </th>
+                                <th> Approved Amount </th>
+                                <th> On hand</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for requestrow in request.request_list.all %}
+                            <tr>
+                                <td class="py-1">{{ forloop.counter }}</td>
+                                <td>
+                                    {{ requestrow.item }}
+                                </td>
+                                <td>
+                                    <input
+                                        style="background-color: transparent;border:none; border-bottom: 0.5px solid black; padding-bottom: 10px; margin-bottom: 0px;"
+                                        type="number" name="{{requestrow.id}}-requested_amount"
+                                        value="{{ requestrow.requested_amount }}"> </input>
+                                </td>
+                                <td>
+                                    {% if requestrow.approved_amount == None %}
+                                    <label class="badge badge-warning">Pending</label>
+                                    {% else %}
+                                    {{ requestrow.approved_amount }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{requestrow.item.quantity}}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- <button type="button" onclick="addrow()" class="btn btn-primary mr-2" style="width: 100px;">
+                        <i class="mdi mdi-library-plus"></i>Add More</button> -->
+                    <button type="submit" class="btn btn-primary mr-2" style="width: 100px;">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contener %}
+{% block javascrepts %}
+{% endblock javascrepts %}

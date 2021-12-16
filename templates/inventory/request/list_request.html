@@ -24,14 +24,20 @@
                             <th> Name </th>
                             <th> Status </th>
                             <th> Description </th>
+                            <th> Actions </th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for request in object_list %}
                         <tr>
                             <td class="py-1">{{ forloop.counter }}</td>
-                            <td>{{ request }}</td>
-                            <td>{% if request.status == "Pending" %}
+                            <td>
+                                <a href="{% url 'Detail_request' pk=request.id %}">
+                                    {{ request }}
+                                </a>
+                            </td>
+                            <td>
+                                {% if request.status == "Pending" %}
                                 <label class="badge badge-info">Pending</label>
                                 {% elif request.status == "Approve"%}
                                 <label class="badge badge-success">Approve</label>
@@ -41,7 +47,18 @@
                                 <label class="badge badge-warning">Deleted</label>
                                 {% endif %}
                             </td>
-                            <td>{{ request.remark }}</td>
+                            <td>
+                                <a href="{% url 'Detail_request' pk=request.id %}">
+                                    {{ request.remark }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'Update_request' pk=request.id %}">
+                                    <!-- <i class="mdi mdi-lead-pencil">Edit</i> -->
+                                    <!-- <i class="mdi mdi-pencil">Edit</i> -->
+                                    <i class="mdi mdi-pencil-outline"></i> Edit
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

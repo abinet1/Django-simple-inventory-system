@@ -97,7 +97,7 @@ class Request(models.Model):
 
 class RequestRow(models.Model):
     item = models.ForeignKey(Items, on_delete=models.CASCADE)
-    request = models.ForeignKey(Request, on_delete=models.CASCADE)
+    request = models.ForeignKey(Request, on_delete=models.CASCADE,related_name="request_list")
     requested_amount = models.IntegerField(validators=[MinValueValidator(1)])
     approved_amount = models.IntegerField(validators=[MinValueValidator(0)], null=True)
 

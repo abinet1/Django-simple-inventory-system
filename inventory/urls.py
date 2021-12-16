@@ -21,26 +21,25 @@ urlpatterns = [
     
     path('measurement/add/', inventory_views.Add_measurements.as_view(), name="Add_measurements"),
     path('measurement/list/', inventory_views.List_measurements.as_view(), name="List_measurements"),
-    
+
     path('shelf/add/', inventory_views.Add_shelf.as_view(), name="Add_shelf"),
-    path('shelf/list/', inventory_views.List_shelf.as_view(), name="List_shelf"),    
+    path('shelf/list/', inventory_views.List_shelf.as_view(), name="List_shelf"),
     path('shelf/update/<int:pk>/', inventory_views.Update_shelf.as_view(), name="Update_shelf"),
-    path('shelf/detail/<int:pk>/', inventory_views.Detail_shelf.as_view(), name="Detail_shelf"),    
+    path('shelf/detail/<int:pk>/', inventory_views.Detail_shelf.as_view(), name="Detail_shelf"),
     
     path('request/add/', inventory_views.Add_request.as_view(), name="Add_request"),
     path('request/list/', inventory_views.List_request.as_view(), name="List_request"),
-    path('request/list/', inventory_views.List_request.as_view(), name="Detail_request"),#inventory_views.Detail_request ->on going
-    path('request/list/', inventory_views.List_request.as_view(), name="Update_request"),#inventory_views.Update_request ->on going 
-
-
+    path('request/detail/<int:pk>', inventory_views.Detail_request.as_view(), name="Detail_request"),#inventory_views.Detail_request ->on going
+    path('request/update/<int:pk>', inventory_views.Update_request.as_view(), name="Update_request"),#inventory_views.Update_request ->on going 
 
     path('store/add/', inventory_views.Add_store.as_view(), name="Add_store"),
-    path('store/list/', inventory_views.List_store.as_view(), name="List_store"), 
+    path('store/list/', inventory_views.List_store.as_view(), name="List_store"),
     path('store/detail/<int:pk>/', inventory_views.Detail_store.as_view(), name="Detail_store"),
-    path('store/update/<int:pk>/', inventory_views.Update_store.as_view(), name="Update_store"),    
+    path('store/update/<int:pk>/', inventory_views.Update_store.as_view(), name="Update_store"),  
     
     path('error/capacity_error',inventory_views.Capacity_error.as_view(), name="Capacity_error"),
     
     path('categories/add/', inventory_views.Add_categories.as_view(), name="Add_categories"),
     path('categories/list/', inventory_views.List_categories.as_view(), name="List_categories"),
+
 ]

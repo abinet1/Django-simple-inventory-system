@@ -37,8 +37,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'dal',
-    'dal_select2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authentications',
-    'inventory'
+    'inventory',
+    'django_select2',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +80,20 @@ TEMPLATES = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+    },
+    "select2": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
+
+SELECT2_CACHE_BACKEND = "select2"
+
+SELECT2_JS = 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js'
+SELECT2_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css'
 WSGI_APPLICATION = 'Django_Simple_Inventory_System.wsgi.application'
 
 

@@ -3,9 +3,15 @@ from django.contrib.auth.models import User
 from django.db.models.fields import TextField
 from django.forms import fields, widgets
 from django.forms import formset_factory
-from dal import autocomplete
+
+# from django_select2 import forms as s2forms
 
 from inventory import models as inv_models
+
+# class Item_widget_s2form(s2forms.ModelSelect2Widget):
+#     search_fields = [
+#         "name__icontains",
+#     ]
 
 # My app imports
 class Add_items_form(forms.ModelForm):
@@ -66,10 +72,16 @@ class Update_shelf_form(forms.ModelForm):
         model = inv_models.Shelf
         fields = "__all__"
 
+class Update_request_form(forms.ModelForm):
+    class Meta:
+        model = inv_models.Request
+        fields = "__all__"
+        # widgets={
+        #     "store":Item_widget_s2form
+        # }
+
 class Test_form(forms.ModelForm):
     class Meta:
         model = inv_models.Propertys
         fields = "__all__"
-        
-
         

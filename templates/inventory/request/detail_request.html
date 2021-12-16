@@ -1,0 +1,61 @@
+{% extends "layouts/base.html" %}
+{% block title%}Request detail{% endblock title %}
+{% block contener %}
+<div class="page-header">
+    <h3 class="page-title"> Request detail</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Request detail table</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Detail Request View</h4>
+                <p class="card-description"> To add Request go to <code>add Request</code> in the side bar.
+                </p>
+                <label for="title-field">Request: <h4 class="card-title" id="title-field">{{object.id}}-{{ object }}
+                    </h4>
+                </label>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> Item </th>
+                            <th> Required Amount </th>
+                            <th> Approved Amount </th>
+                            <th> On hand</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in object.request_list.all %}
+                        <tr>
+                            <td class="py-1">{{ forloop.counter }}</td>
+                            <td>
+                                {{ request.item }}
+                            </td>
+                            <td>
+                                {{ request.requested_amount }}
+                            </td>
+                            <td>
+                                {% if request.approved_amount == None %}
+                                <label class="badge badge-warning">Pending</label>
+                                {% else %}
+                                {{ request.approved_amount }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{request.item.quantity}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contener %}

@@ -264,19 +264,40 @@ class List_request(LoginRequiredMixin, ListView):
         })
         return context
 
-# class Detail_request(LoginRequiredMixin, DetailView):
-#     model = inv_models.Request
-#     template_view = "inventory/request/detail_request.html"
+class Detail_request(LoginRequiredMixin, DetailView):
+    model = inv_models.Request
+    template_name = "inventory/request/detail_request.html"
 
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         # context.update({""})
-#         return context
+class Update_request(LoginRequiredMixin, TemplateView):
+    model = inv_models.Request
+    template_name = "inventory/request/update_request.html"
 
-# class Update_request(LoginRequiredMixin, TemplateView):
-#     model = inv_models.Request
-#     template_name = "inventory/request/update_request.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "request":inv_models.Request.objects.get(id=kwargs["pk"]),
+            "users":auth_models.User.objects.all(), 
+        })
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        request_list = inv_models.Request.objects.get(id=kwargs["pk"])
+        for response in request.POST:
+            if response == "csrfmiddlewaretoken":
+                pass
+            elif response == "name-field":
+                request_list.user = auth_models.User.objects.get(id=request.POST.get(response))
+            else:
+                res = response.split("-")
+                print(request.POST.get(response))
+                request_row = inv_models.RequestRow.objects.get(id=res[0])
+                request_row.requested_amount = request.POST.get(response)
+                request_row.save()
+        request_list.save()
+        return redirect(reverse_lazy("List_request"))
+                
 
+            
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Errors ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Capacity_error(LoginRequiredMixin, TemplateView):
     template_name = "inventory/capacity_error.html"
