@@ -74,7 +74,7 @@ class Propertys(models.Model):
 class Request(models.Model):
     STATUS = (
         ('Pending','Pending'),
-        ('Approved','Approve'),        
+        ('Approved','Approved'),        
         ('Declined','Declined'),       
         ('On hold','On hold'),       
         ('Suspended','Suspended'),  

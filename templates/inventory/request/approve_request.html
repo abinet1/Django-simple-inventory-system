@@ -1,7 +1,6 @@
 {% extends "layouts/base.html" %}
 {% block title%}Request detail{% endblock title %}
 {% block contener %}
-
 <div class="page-header">
     <h3 class="page-title"> Request detail</h3>
     <nav aria-label="breadcrumb">
@@ -40,18 +39,19 @@
                         <div class="col-4" style="display:flex;">
                             <div class="form-group" style="margin-left: auto;">
                                 <label for="name-field">Status:</label>
-                                <h4 style="color: black;">Pending</h4>
+                                <h4 style="color: black;">{{ request.status }}</h4>
                             </div>
                         </div>
                         <div class="col-2"></div>
                         <div class="col-6" style="display:flex;">
                             <div class="form-group" style="margin-right:auto;">
                                 <label for="remark-field">Remark:</label>
-                                <textarea name="remark" class="form-control" id="remark-field" rows="3"
-                                    placeholder="Description/remark">{{ request.remark }}</textarea>
+                                <p name="remark" class="form-control" id="remark-field" rows="3"
+                                    placeholder="Description/remark">{{request.remark}}</p>
                             </div>
                         </div>
                     </div>
+                    <p><code>{{ error }}</code></p>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -70,17 +70,39 @@
                                     {{ requestrow.item }}
                                 </td>
                                 <td>
-                                    <input
-                                        style="background-color: transparent;border:none; border-bottom: 0.5px solid black; padding-bottom: 10px; margin-bottom: 0px;"
-                                        type="number" name="{{requestrow.id}}-requested_amount"
-                                        value="{{ requestrow.requested_amount }}"> </input>
+                                    {{ requestrow.requested_amount }}
                                 </td>
-                                <td>
-                                    {% if requestrow.approved_amount == None %}
-                                    <label class="badge badge-warning">Pending</label>
-                                    {% else %}
-                                    {{ requestrow.approved_amount }}
-                                    {% endif %}
+                                <td>{% if requestrow.approved_amount == None %}
+                                    {% if requestrow.requested_amount <= requestrow.item.quantity %} <input
+                                        style="background-color: transparent;border:none; border-bottom: 0.5px solid black; padding-bottom: 10px; margin-bottom: 0px;"
+                                        data-approvedamount="{{ requestrow.item.quantity }}" type="number"
+                                        name="{{requestrow.id}}-approve_amount" id="{{requestrow.id}}-approve_amount"
+                                        value="{{ requestrow.requested_amount }}" onkeyup="approved_value_check(this)">
+                                        </input>
+                                        <span id="{{requestrow.id}}-approve_amount_error" style="visibility: hidden;">
+                                            <code>we don't that much item on hand</code>
+                                        </span>
+                                        {% elif requestrow.requested_amount > requestrow.item.quantity %}
+                                        <input
+                                            style="background-color: transparent;border:none; border-bottom: 0.5px solid black; padding-bottom: 10px; margin-bottom: 0px;"
+                                            type="number" name="{{requestrow.id}}-approve_amount"
+                                            data-approvedamount="{{ requestrow.item.quantity }}"
+                                            id="{{requestrow.id}}-approve_amount" value="{{ requestrow.item.quantity }}"
+                                            onkeyup="approved_value_check(this)">
+                                        </input>
+                                        <span id="{{requestrow.id}}-approve_amount_error"
+                                            style="visibility: hidden;"><code>we don't that much item on hand</code></span>
+                                        <!-- onkeydown="" -->
+                                        {% endif %}
+                                        {% endif %}
+
+                                        {% comment %}
+                                        {% if requestrow.approved_amount == None %}
+                                        <label class="badge badge-warning">Pending</label>
+                                        {% else %}
+                                        {{ requestrow.approved_amount }}
+                                        {% endif %}
+                                        {% endcomment %}
                                 </td>
                                 <td>
                                     {{requestrow.item.quantity}}
@@ -89,8 +111,6 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    <!-- <button type="button" onclick="addrow()" class="btn btn-primary mr-2" style="width: 100px;">
-                        <i class="mdi mdi-library-plus"></i>Add More</button> -->
                     <button type="submit" class="btn btn-primary mr-2" style="width: 100px;">Submit</button>
                 </form>
             </div>
@@ -98,5 +118,21 @@
     </div>
 </div>
 {% endblock contener %}
-{% block javascrepts %}
-{% endblock javascrepts %}
+{% block javascripts %}
+<script>
+    function approved_value_check(approved_ele) {
+        var approved_value = approved_ele;
+        if (approved_value.value) {
+            console.log(parseInt(approved_value.value) > parseInt(approved_value.getAttribute("data-approvedamount")))
+            console.log(approved_value.getAttribute("data-approvedamount"))
+            if (parseInt(approved_value.value) > parseInt(approved_value.getAttribute("data-approvedamount"))) {
+                var error = document.getElementById(approved_value.getAttribute("id") + "_error");
+                error.style.visibility = "visible";
+            } else {
+                var error = document.getElementById(approved_value.getAttribute("id") + "_error");
+                error.style.visibility = "hidden";
+            }
+        }
+    }
+</script>
+{% endblock javascripts %}

@@ -29,8 +29,9 @@ urlpatterns = [
     
     path('request/add/', inventory_views.Add_request.as_view(), name="Add_request"),
     path('request/list/', inventory_views.List_request.as_view(), name="List_request"),
-    path('request/detail/<int:pk>', inventory_views.Detail_request.as_view(), name="Detail_request"),#inventory_views.Detail_request ->on going
-    path('request/update/<int:pk>', inventory_views.Update_request.as_view(), name="Update_request"),#inventory_views.Update_request ->on going 
+    path('request/detail/<int:pk>/', inventory_views.Detail_request.as_view(), name="Detail_request"),#inventory_views.Detail_request ->on going
+    path('request/update/<int:pk>/', inventory_views.Update_request.as_view(), name="Update_request"),#inventory_views.Update_request ->on going 
+    path('request/approve/<int:pk>/', inventory_views.Approve_request.as_view(), name="Approve_request"),
 
     path('store/add/', inventory_views.Add_store.as_view(), name="Add_store"),
     path('store/list/', inventory_views.List_store.as_view(), name="List_store"),

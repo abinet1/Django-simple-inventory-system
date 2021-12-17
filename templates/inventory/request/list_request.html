@@ -24,7 +24,7 @@
                             <th> Name </th>
                             <th> Status </th>
                             <th> Description </th>
-                            <th> Actions </th>
+                            <th colspan=1 style="text-align: center;"> Actions </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,7 +39,7 @@
                             <td>
                                 {% if request.status == "Pending" %}
                                 <label class="badge badge-info">Pending</label>
-                                {% elif request.status == "Approve"%}
+                                {% elif request.status == "Approved"%}
                                 <label class="badge badge-success">Approve</label>
                                 {% elif request.status == "Declined"%}
                                 <label class="badge badge-warning">Declined</label>
@@ -52,12 +52,19 @@
                                     {{ request.remark }}
                                 </a>
                             </td>
-                            <td>
+                            <td style="display: flex; justify-content: space-around;">
                                 <a href="{% url 'Update_request' pk=request.id %}">
                                     <!-- <i class="mdi mdi-lead-pencil">Edit</i> -->
                                     <!-- <i class="mdi mdi-pencil">Edit</i> -->
                                     <i class="mdi mdi-pencil-outline"></i> Edit
                                 </a>
+                                {% if request.status != "Approved" %}
+                                <a href="{% url 'Approve_request' pk=request.id %}">
+                                    <!-- <i class="mdi mdi-lead-pencil">Edit</i> -->
+                                    <!-- <i class="mdi mdi-pencil">Edit</i> -->
+                                    <i class="mdi mdi-check"></i> Approve
+                                </a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}

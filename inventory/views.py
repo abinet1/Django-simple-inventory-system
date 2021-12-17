@@ -287,6 +287,9 @@ class Update_request(LoginRequiredMixin, TemplateView):
                 pass
             elif response == "name-field":
                 request_list.user = auth_models.User.objects.get(id=request.POST.get(response))
+            elif response == "remark":
+                if request.POST.get(response) != "":
+                    request_list.remark = request.POST.get(response);
             else:
                 res = response.split("-")
                 print(request.POST.get(response))
@@ -296,7 +299,45 @@ class Update_request(LoginRequiredMixin, TemplateView):
         request_list.save()
         return redirect(reverse_lazy("List_request"))
                 
+class Approve_request(LoginRequiredMixin, TemplateView):
+    model = inv_models.Request
+    template_name = "inventory/request/approve_request.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "request":inv_models.Request.objects.get(id=kwargs["pk"]), 
+        })
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        request_list = inv_models.Request.objects.get(id=kwargs["pk"])
+        rows = []
+        for response in request.POST:
+            if response == "csrfmiddlewaretoken":
+                pass
+            else:
+                res = response.split("-")
+                request_row = inv_models.RequestRow.objects.get(id=res[0])
+                apr_amount =  0 if request_row.item.quantity == None else request_row.item.quantity 
+                if int(request.POST.get(response))<=apr_amount:
+                    request_row.approved_amount = int(request.POST.get(response))
+                    request_row.item.quantity = request_row.item.quantity - request_row.approved_amount
+                    request_list.status = "Approved"
+                    rows.append(request_row)
+
+                else:
+                    return render(request, "inventory/request/approve_request.html",
+                    {
+                        "request":inv_models.Request.objects.get(id=kwargs["pk"]),
+                        "error":"pleace check agen. you cant approve an item if it doesn't exist in the store. you can convert it to purchase request or approve with lower amount."
+                    })
+
+        for row in rows:
+            row.save()
+            row.item.save()
+        request_list.save()
+        return redirect(reverse_lazy("List_request"))
             
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Errors ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Capacity_error(LoginRequiredMixin, TemplateView):
