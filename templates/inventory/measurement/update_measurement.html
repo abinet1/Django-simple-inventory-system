@@ -1,14 +1,14 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
-{% block title %}Add Measurement{% endblock title %}
+{% block title %}Add Item{% endblock title %}
 {% block contener %}
 
 <div class="page-header">
-    <h3 class="page-title"> Add Measurements </h3>
+    <h3 class="page-title"> Add Items </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Measurement</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add measurement</li>
+            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Form elements</li>
         </ol>
     </nav>
 </div>
@@ -30,7 +30,8 @@
                                         :</strong><br>(like width,radies...etc)
                                     <span style="color: crimson;">{{ form.name.errors }}</span>
                                 </label>
-                                <input type="text" class="form-control" id="name-field" placeholder="Label" name="name">
+                                <input type="text" class="form-control" id="name-field" value="{{ form.name.value }}"
+                                    name="name">
                             </div>
                         </div>
 
@@ -39,7 +40,8 @@
                                 <label for="description-field"><strong style="color: black;">Description :</strong>
                                     <span style="color: crimson;">{{ form.description.errors }}</span></label>
                                 <textarea name="description" class="form-control" id="description-field"
-                                    placeholder="Description" name="description" rows="3"></textarea>
+                                    name="description" value="{{ form.description.value }}"
+                                    rows="3">{{ form.description.value }}</textarea>
                             </div>
 
                         </div>
@@ -54,6 +56,4 @@
 </div>
 
 {% endblock contener %}
-{% block javascripts %}
-
-{% endblock javascripts %}
+{% block javascripts %}{% endblock javascripts %}

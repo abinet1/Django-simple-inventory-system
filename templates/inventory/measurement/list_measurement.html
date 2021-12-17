@@ -23,14 +23,30 @@
                             <th> # </th>
                             <th> Name </th>
                             <th> Description </th>
+                            <th> Actions </th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for measurement in object_list %}
                         <tr>
                             <td class="py-1">{{ forloop.counter }}</td>
-                            <td>{{ measurement.name }}</td>
-                            <td>{{ measurement.description }}</td>
+                            <td>
+                                <a href="{% url 'Detail_measurement' pk=measurement.id %}">
+                                    {{ measurement.name }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'Detail_measurement' pk=measurement.id %}">
+                                    {{ measurement.description }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'Update_measurement' pk=measurement.id %}">
+                                    <!-- <i class="mdi mdi-lead-pencil">Edit</i> -->
+                                    <!-- <i class="mdi mdi-pencil">Edit</i> -->
+                                    <i class="mdi mdi-pencil-outline"></i> Edit
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

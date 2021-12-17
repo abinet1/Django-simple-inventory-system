@@ -1,0 +1,49 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %}detail Measurement{% endblock title %}
+{% block contener %}
+
+<div class="page-header">
+    <h3 class="page-title">detail measurement </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Measurement</a></li>
+            <li class="breadcrumb-item active" aria-current="page">detail measurement</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="color: black;">detail measurement</h4>
+                <p>add Measurement so that you be able to <span style="color: chartreuse;">user it</span> when ever you
+                    <span style="color: chartreuse;">add items</span> to the system.
+                </p>
+                <br>
+                <div class="row">
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="name-field"><strong style="color: black;">Label of the Measurement:
+                                </strong><br>(like width,radies...etc)
+                            </label>
+                            <h4 type="text" class="form-control" id="name-field" name="name">{{ object.name}}</h4>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="description-field"><strong style="color: black;">Description :</strong></label>
+                            <p style="color: black;" name="description" class="form-control" id="description-field"
+                                placeholder="Description" name="description" rows="3">{{ object.description }}</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock contener %}
+{% block javascripts %}{% endblock javascripts %}

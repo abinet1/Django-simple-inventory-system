@@ -21,6 +21,9 @@ urlpatterns = [
     
     path('measurement/add/', inventory_views.Add_measurements.as_view(), name="Add_measurements"),
     path('measurement/list/', inventory_views.List_measurements.as_view(), name="List_measurements"),
+    path('measurement/update/<int:pk>/', inventory_views.Update_measurement.as_view(), name="Update_measurement"),
+    path('measurement/detail/<int:pk>/', inventory_views.Detail_measurement.as_view(), name="Detail_measurement"),
+    
 
     path('shelf/add/', inventory_views.Add_shelf.as_view(), name="Add_shelf"),
     path('shelf/list/', inventory_views.List_shelf.as_view(), name="List_shelf"),

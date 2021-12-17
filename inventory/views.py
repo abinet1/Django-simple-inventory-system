@@ -122,8 +122,6 @@ class Update_item(LoginRequiredMixin, UpdateView):
 class Detail_item(LoginRequiredMixin, DetailView):
     template_name = "inventory/item/detial_item.html"
     model = inv_models.Items
-    success_url = reverse_lazy("List_items")
-
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list measurement ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Add_measurements(LoginRequiredMixin, CreateView):
     model = inv_models.Measurement
@@ -135,7 +133,15 @@ class List_measurements(LoginRequiredMixin, ListView):
     model = inv_models.Measurement
     template_name = "inventory/measurement/list_measurement.html"
 
+class Update_measurement(LoginRequiredMixin, UpdateView):
+    model = inv_models.Measurement
+    form_class = inv_forms.Add_mesurement_form
+    template_name = "inventory/measurement/update_measurement.html"
+    success_url = reverse_lazy("List_measurements")
 
+class Detail_measurement(LoginRequiredMixin, DetailView):
+    model = inv_models.Measurement
+    template_name = "inventory/measurement/detail_measurement.html"
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list category ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Add_categories(LoginRequiredMixin, CreateView):
     model = inv_models.Category
