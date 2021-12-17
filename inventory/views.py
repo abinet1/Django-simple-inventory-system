@@ -148,6 +148,15 @@ class List_categories(LoginRequiredMixin, ListView):
     model = inv_models.Category
     template_name = "inventory/category/list_category.html"
 
+class Update_category(LoginRequiredMixin, UpdateView):
+    model = inv_models.Category
+    form_class = inv_forms.Add_category_form
+    template_name = "inventory/category/update_category.html"  
+    success_url = reverse_lazy("List_categories")  
+
+class Detail_category(LoginRequiredMixin, DetailView):
+    model = inv_models.Category
+    template_name = "inventory/category/detail_category.html"    
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list store ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Add_store(LoginRequiredMixin, CreateView):
     model = inv_models.Store
@@ -302,6 +311,13 @@ class Update_request(LoginRequiredMixin, TemplateView):
 class Approve_request(LoginRequiredMixin, TemplateView):
     model = inv_models.Request
     template_name = "inventory/request/approve_request.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        context = super().dispatch(request, *args, **kwargs)
+        req = inv_models.Request.objects.get(id=kwargs["pk"])
+        if req.status == "Approved":
+            return redirect(reverse_lazy("List_request"))
+        return context
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

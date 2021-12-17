@@ -23,14 +23,22 @@
                             <th> # </th>
                             <th> Name </th>
                             <th> Description </th>
+                            <th> Actions </th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for category in object_list %}
                         <tr>
                             <td class="py-1">{{ forloop.counter }}</td>
-                            <td>{{ category.name }}</td>
-                            <td>{{ category.description }}</td>
+                            <td><a href="{% url 'Detail_category' pk=category.id%}">{{ category.name }}</a></td>
+                            <td><a href="{% url 'Detail_category' pk=category.id%}">{{ category.description }}</a></td>
+                            <td>
+                                <a href="{% url 'Update_category' pk=category.id %}">
+                                    <!-- <i class="mdi mdi-lead-pencil">Edit</i> -->
+                                    <!-- <i class="mdi mdi-pencil">Edit</i> -->
+                                    <i class="mdi mdi-pencil-outline"></i> Edit
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

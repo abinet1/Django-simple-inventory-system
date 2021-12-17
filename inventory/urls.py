@@ -42,5 +42,6 @@ urlpatterns = [
     
     path('categories/add/', inventory_views.Add_categories.as_view(), name="Add_categories"),
     path('categories/list/', inventory_views.List_categories.as_view(), name="List_categories"),
-
+    path('categories/detail/<int:pk>/', inventory_views.Detail_category.as_view(), name="Detail_category"),
+    path('categories/update/<int:pk>/', inventory_views.Update_category.as_view(), name="Update_category")
 ]
