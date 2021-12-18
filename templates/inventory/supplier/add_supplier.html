@@ -1,0 +1,73 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %}Add supplier{% endblock title %}
+{% block contener %}
+
+<div class="page-header">
+    <h3 class="page-title"> Add supplier </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">supplier</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add supplier</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="color: black;">Add supplier</h4>
+                <br>
+                <form class="forms-sample" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label for="name-field"><strong style="color: black;">Name :</strong>
+                                    <span style="color: crimson;">{{ form.name.errors }}</span>
+                                </label>
+                                <input type="text" class="form-control" id="name-field" placeholder="Name" name="name">
+                            </div>
+                        </div>
+
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label for="address-field"><strong style="color: black;">Address :</strong>
+                                    <span style="color: crimson;">{{ form.address.errors }}</span></label>
+                                <input name="address" class="form-control" id="address-field" placeholder="Address">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label for="tinNumber-field"><strong style="color: black;">tin Number :</strong>
+                                    <span style="color: crimson;">{{ form.tinNumber.errors }}</span>
+                                </label>
+                                <input type="text" class="form-control" id="max_capacity-field" placeholder="tinNumber"
+                                    name="tinNumber">
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label for="phone-field"><strong style="color: black;">Phone :</strong>
+                                    <span style="color: crimson;">{{ form.phone.errors }}</span>
+                                </label>
+                                <input type="text" class="form-control" id="phone-field" placeholder="Phone"
+                                    name="phone">
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock contener %}
+{% block javascripts %}
+
+{% endblock javascripts %}

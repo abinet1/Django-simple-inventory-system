@@ -46,5 +46,16 @@ urlpatterns = [
     path('categories/add/', inventory_views.Add_categories.as_view(), name="Add_categories"),
     path('categories/list/', inventory_views.List_categories.as_view(), name="List_categories"),
     path('categories/detail/<int:pk>/', inventory_views.Detail_category.as_view(), name="Detail_category"),
-    path('categories/update/<int:pk>/', inventory_views.Update_category.as_view(), name="Update_category")
+    path('categories/update/<int:pk>/', inventory_views.Update_category.as_view(), name="Update_category"),
+
+    path('supplier/add/', inventory_views.Add_supplier.as_view(), name="Add_supplier"),
+    path('supplier/list/', inventory_views.List_supplier.as_view(), name="List_supplier"),
+    path('supplier/detail/<int:pk>/', inventory_views.Detail_supplier.as_view(), name="Detail_supplier"),
+    path('supplier/update/<int:pk>/', inventory_views.Update_supplier.as_view(), name="Update_supplier"),
+    path('supplier/edit/<int:pk>/', inventory_views.Edit_supplier.as_view(), name="Edit_supplier"),
+    # add supplier
+    # list supplier
+	# detail supplier
+	# update supplier
+	# edit supplier
 ]

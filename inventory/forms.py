@@ -5,7 +5,7 @@ from django.forms import fields, widgets
 from django.forms import formset_factory
 
 # from django_select2 import forms as s2forms
-
+from authentications import models as auth_models
 from inventory import models as inv_models
 
 # class Item_widget_s2form(s2forms.ModelSelect2Widget):
@@ -79,6 +79,17 @@ class Update_request_form(forms.ModelForm):
         # widgets={
         #     "store":Item_widget_s2form
         # }
+
+class Add_supplier_form(forms.ModelForm):
+    class Meta:
+        model = auth_models.Supplier
+        fields = "__all__"
+        exclude = ("status",)
+
+class Update_supplier_form(forms.ModelForm):
+    class Meta:
+        model = auth_models.Supplier
+        fields = ("status",)
 
 class Test_form(forms.ModelForm):
     class Meta:

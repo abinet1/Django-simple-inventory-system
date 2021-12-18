@@ -1,6 +1,7 @@
 from json.encoder import JSONEncoder
 import json
 
+from datetime import datetime
 from django.core.checks import messages
 from django.db import models
 from django.db.models.query import QuerySet
@@ -26,7 +27,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 class Home(LoginRequiredMixin, TemplateView ):
     template_name = "inventory/Home.html"
 
-
 #  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ test classes ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Test(LoginRequiredMixin, TemplateView):
     template_name = "pages/table.html"
@@ -50,7 +50,6 @@ class Add_items(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('Add_placement_value', args=(self.object.id,))
-
 
 class Add_placement_value(LoginRequiredMixin, TemplateView):
     model = inv_models.Items
@@ -142,6 +141,7 @@ class Update_measurement(LoginRequiredMixin, UpdateView):
 class Detail_measurement(LoginRequiredMixin, DetailView):
     model = inv_models.Measurement
     template_name = "inventory/measurement/detail_measurement.html"
+
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list category ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Add_categories(LoginRequiredMixin, CreateView):
     model = inv_models.Category
@@ -149,7 +149,6 @@ class Add_categories(LoginRequiredMixin, CreateView):
     template_name = "inventory/category/add_category.html"
     success_url = reverse_lazy("List_categories")
 
-    
 class List_categories(LoginRequiredMixin, ListView):
     model = inv_models.Category
     template_name = "inventory/category/list_category.html"
@@ -162,7 +161,8 @@ class Update_category(LoginRequiredMixin, UpdateView):
 
 class Detail_category(LoginRequiredMixin, DetailView):
     model = inv_models.Category
-    template_name = "inventory/category/detail_category.html"    
+    template_name = "inventory/category/detail_category.html" 
+
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ add and list store ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 class Add_store(LoginRequiredMixin, CreateView):
     model = inv_models.Store
@@ -213,7 +213,6 @@ class Add_shelf(LoginRequiredMixin, CreateView):
             return redirect(reverse_lazy("List_shelf"))
         else:
             return redirect(reverse_lazy("Capacity_error"))
-        
         
 class List_shelf(LoginRequiredMixin, ListView):
     model = inv_models.Shelf
@@ -268,7 +267,6 @@ class Add_request(LoginRequiredMixin, TemplateView):
             requestrow_model.save()
         return redirect(reverse_lazy("List_request"))
         
-
 class List_request(LoginRequiredMixin, ListView):
     template_name = "inventory/request/list_request.html"
     model = inv_models.Request
@@ -358,9 +356,68 @@ class Approve_request(LoginRequiredMixin, TemplateView):
         for row in rows:
             row.save()
             row.item.save()
+        request_list.approved_date = datetime.now()
         request_list.save()
         return redirect(reverse_lazy("List_request"))
             
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Suppliers ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class Add_supplier(LoginRequiredMixin, CreateView):
+    model = auth_models.Supplier
+    template_name = "inventory/supplier/add_supplier.html"
+    success_url = reverse_lazy("List_supplier")
+    form_class = inv_forms.Add_supplier_form
+
+class List_supplier(LoginRequiredMixin, ListView):
+    model = auth_models.Supplier
+    template_name = "inventory/supplier/list_supplier.html"
+    
+class Detail_supplier(LoginRequiredMixin, DetailView):
+    model = auth_models.Supplier
+    template_name = "inventory/supplier/detail_supplier.html"
+
+class Update_supplier(LoginRequiredMixin, UpdateView):
+    model = auth_models.Supplier
+    form_class = inv_forms.Update_supplier_form
+    template_name = "inventory/supplier/update_supplier.html"
+    success_url = reverse_lazy("List_supplier")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = self.get_object()
+        context.update({"object":obj})
+        return context
+
+class Edit_supplier(LoginRequiredMixin, UpdateView):
+    model = auth_models.Supplier
+    form_class = inv_forms.Add_supplier_form
+    template_name = "inventory/supplier/edit_supplier.html"
+    success_url = reverse_lazy("List_supplier")
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ purchase request ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class Add_purchase_request(LoginRequiredMixin, TemplateView):
+    model = inv_models.Purchase_Request
+    template_name = "inventory/purchase_request/add_purchase_request.html"
+
+class List_purchase_request(LoginRequiredMixin, ListView):
+    model = inv_models.Purchase_Request
+    template_name = "inventory/purchase_request/list_purchase_request.html"
+
+class Convert_to_purchase_rquest(LoginRequiredMixin, TemplateView):
+    model = inv_models.Purchase_Request
+    template_name = "inventory/purchase_request/convert_purchase_request.html"
+
+class Approve_purchase_request(LoginRequiredMixin, TemplateView):
+    model = inv_models.Purchase_Request
+    template_name = "inventory/purchase_request/approve_purchase_request.html"
+
+class Edit_pusrchase(LoginRequiredMixin, TemplateView):
+    model = inv_models.Purchase_Request
+    template_name = "inventory/purchase_request/edit_purchase_request.html"
+
+class Detail_purchase(LoginRequiredMixin, DetailView):
+    model = inv_models.Purchase_Request
+    template_name = "inventory/purchase_request/detail_purchase_request.html"
+
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Errors ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Capacity_error(LoginRequiredMixin, TemplateView):
     template_name = "inventory/capacity_error.html"

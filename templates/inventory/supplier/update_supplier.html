@@ -1,0 +1,132 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %}Edit supplier{% endblock title %}
+{% block contener %}
+
+<div class="page-header">
+    <h3 class="page-title"> Edit supplier </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">supplier</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit supplier</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="color: black;">Edit supplier</h4>
+                <br>
+                <form class="forms-sample" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label for="name-field"><strong style="color: black;">Name :</strong>
+                                </label>
+                                <h4 type="text" class="form-control" id="name-field" placeholder="Name" name="name">
+                                    {{ object.name }}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label for="address-field"><strong style="color: black;">Address :</strong></label>
+                                <h4 name="address" class="form-control" id="address-field" placeholder="Address">
+                                    {{ object.address }}
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label for="tinNumber-field"><strong style="color: black;">tin Number :</strong></label>
+                                <h4 type="text" class="form-control" id="max_capacity-field" placeholder="tinNumber"
+                                    name="tinNumber">
+                                    {{ object.tinNumber }}
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label for="phone-field"><strong style="color: black;">Phone :</strong></label>
+                                <h4 type="text" class="form-control" id="phone-field" placeholder="Phone" name="phone">
+                                    {{ object.phone }}
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+                            <div class="form-group">
+                                <label for="status-field" style="color: black;">*Gender:</label>
+                                <select class="form-control" id="status-field" name="status">
+                                    {% if object.status == 'Registered' %}
+                                    <option selected value="Registered">
+                                        Registered
+                                    </option>
+                                    {% else %}
+                                    <option value="Registered">
+                                        Registered
+                                    </option>
+                                    {% endif %}
+                                    {% if object.status == 'Approved' %}
+                                    <option selected value="Approved">
+                                        Approved
+                                    </option>
+                                    {% else %}
+                                    <option value="Approved">
+                                        Approved
+                                    </option>
+                                    {% endif %}
+                                    {% if object.status == 'Normalized' %}
+                                    <option selected value="Normalized">
+                                        Normalized
+                                    </option>
+                                    {% else %}
+                                    <option value="Normalized">
+                                        Normalized
+                                    </option>
+                                    {% endif %}
+                                    {% if object.status == 'Identified' %}
+                                    <option selected value="Identified">
+                                        Identified
+                                    </option>
+                                    {% else %}
+                                    <option value="Identified">
+                                        Identified
+                                    </option>
+                                    {% endif %}
+                                    {% if object.status == 'Invited' %}
+                                    <option selected value="Invited">
+                                        Invited
+                                    </option>
+                                    {% else %}
+                                    <option value="Invited">
+                                        Invited
+                                    </option>
+                                    {% endif %}
+                                    {% if object.status == 'Rejected' %}
+                                    <option selected value="Rejected">
+                                        Rejected
+                                    </option>
+                                    {% else %}
+                                    <option value="Rejected">
+                                        Rejected
+                                    </option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock contener %}
+{% block javascripts %}
+
+{% endblock javascripts %}

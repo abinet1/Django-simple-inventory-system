@@ -1,0 +1,72 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %}Detail supplier{% endblock title %}
+{% block contener %}
+
+<div class="page-header">
+    <h3 class="page-title"> Detail supplier </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">supplier</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detail supplier</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="color: black;">Detail supplier</h4>
+                <div class="row">
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="name-field">Name :</label>
+                            <h4 type="text" class="form-control" id="name-field" placeholder="Name" name="name">
+                                <strong style="color: black;"> {{ object.name }}</strong>
+                            </h4>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="address-field">Address :</label>
+                            <h4 name="address" class="form-control" id="address-field" placeholder="Address">
+                                <strong style="color: black;">{{ object.address }}</strong>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="tinNumber-field">tin Number :</label>
+                            <h4 type="text" class="form-control" id="max_capacity-field" placeholder="tinNumber"
+                                name="tinNumber">
+                                <strong style="color: black;">{{ object.tinNumber }}</strong>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="phone-field">Phone :</label>
+                            <h4 type="text" class="form-control" id="phone-field" placeholder="Phone" name="phone">
+                                <strong style="color: black;">{{ object.phone }}</strong>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="status-field">Gender :</label>
+                            <h4 type="text" class="form-control" id="static-field" placeholder="Static" name="static">
+                                <strong style="color: black;">{{ object.status }}</strong>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock contener %}
+{% block javascripts %}
+
+{% endblock javascripts %}

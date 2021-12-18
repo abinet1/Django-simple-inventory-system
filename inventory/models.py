@@ -104,5 +104,32 @@ class RequestRow(models.Model):
     def __str__(self):
         return f'{self.item}-{self.requested_amount}'
 
+class Purchase_Request(models.Model):
+    STATUS = (
+        ('Pending','Pending'),
+        ('Approved','Approved'),        
+        ('Declined','Declined'),       
+        ('On hold','On hold'),       
+        ('Suspended','Suspended'),  
+        ('Deleted','Deleted'),   
+        ('Accepted','Accepted'),   
+    )
+    supplier_by = models.ForeignKey(auth_models.Supplier,on_delete=CASCADE, null=True, blank=True, related_name="supplier")
+    request_date = models.DateField(auto_now_add=True)
+    approved_date = models.DateField(null=True)
+    status = models.CharField(choices=STATUS, max_length=100, default='Pending')
+    request_by = models.ForeignKey(auth_models.User, on_delete=CASCADE, related_name='prequest_user')
+    approved_by = models.ForeignKey(auth_models.User, on_delete=CASCADE, null=True, blank=True, related_name='papprove_user')
+    remark = models.TextField(default="for production purpuses.")
     
-        
+    def __str__(self):
+        return f'{self.supplier_by.name}-{self.request_by}-{self.request_date}'
+
+class Purchase_Request_List(models.Model):
+    item = models.ForeignKey(Items, on_delete=models.CASCADE)
+    request = models.ForeignKey(Purchase_Request, on_delete=models.CASCADE,related_name="prequest_list")
+    requested_amount = models.IntegerField(validators=[MinValueValidator(1)])
+    approved_amount = models.IntegerField(validators=[MinValueValidator(0)], null=True)
+
+    def __str__(self):
+        return f'{self.item}-{self.requested_amount}'

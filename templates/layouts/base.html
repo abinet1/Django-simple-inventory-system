@@ -450,6 +450,24 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#nav-supplier" aria-expanded="false"
+                            aria-controls="nav-return">
+                            <span class="icon-bg"><i class="mdi mdi-jeepney menu-icon"></i></span>
+                            <span class="menu-title">Supplier</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="nav-supplier">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'Add_supplier' %}">Add supplier</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'List_supplier' %}">List supplier</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
 
                     <li class="nav-item nav-category">Main</li>
 

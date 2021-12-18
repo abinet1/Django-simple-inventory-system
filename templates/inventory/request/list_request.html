@@ -37,6 +37,11 @@
                                 </a>
                             </td>
                             <td>
+                                <a href="{% url 'Detail_request' pk=request.id %}">
+                                    {{ request.approved_date }}
+                                </a>
+                            </td>
+                            <td>
                                 {% if request.status == "Pending" %}
                                 <label class="badge badge-info">Pending</label>
                                 {% elif request.status == "Approved"%}
