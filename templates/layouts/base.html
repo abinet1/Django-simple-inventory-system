@@ -468,6 +468,25 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#nav-purchase_request" aria-expanded="false"
+                            aria-controls="nav-return">
+                            <span class="icon-bg"><i class="mdi mdi-jeepney menu-icon"></i></span>
+                            <span class="menu-title">purchase request</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="nav-purchase_request">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'Add_purchase_request' %}">Add Purchase request</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'List_purchase_request' %}">
+                                        List Purchase request</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
 
                     <li class="nav-item nav-category">Main</li>
 

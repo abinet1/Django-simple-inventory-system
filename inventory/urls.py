@@ -53,6 +53,12 @@ urlpatterns = [
     path('supplier/detail/<int:pk>/', inventory_views.Detail_supplier.as_view(), name="Detail_supplier"),
     path('supplier/update/<int:pk>/', inventory_views.Update_supplier.as_view(), name="Update_supplier"),
     path('supplier/edit/<int:pk>/', inventory_views.Edit_supplier.as_view(), name="Edit_supplier"),
+
+    path('purchase/request/add/', inventory_views.Add_purchase_request.as_view(), name="Add_purchase_request"),
+    path('purchase/request/list/', inventory_views.List_purchase_request.as_view(), name="List_purchase_request"),
+    path('purchase/request/detail/<int:pk>/', inventory_views.Detail_purchase_request.as_view(), name="Detail_supplier"),
+    path('purchase/request/update/<int:pk>/', inventory_views.Update_supplier.as_view(), name="Update_supplier"),
+    path('purchase/request/edit/<int:pk>/', inventory_views.Edit_supplier.as_view(), name="Edit_supplier"),
     # add supplier
     # list supplier
 	# detail supplier

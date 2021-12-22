@@ -1,0 +1,74 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %}Detail store{% endblock title %}
+{% block contener %}
+
+<div class="page-header">
+    <h3 class="page-title"> Detail store </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">store</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detail store</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="color: black;">Detail store</h4>
+                <p>add categories so that you be able to <span style="color: chartreuse;">user it</span> when ever you
+                    <span style="color: chartreuse;">add store</span> to the system.
+                </p>
+                <br>
+                <div class="row">
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="name-field">Name:</label>
+                            <h4 id="name-field" style="color: black;" name="name">
+                                {{ object.name }}
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="location-field">Location:</label>
+                            <h4 id="location-field" style="color: black;" name="location">
+                                {{ object.location }}
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="max_capacity-field">Max Capacity:</label>
+                            <h4 id="max_capacity-field" style="color: black;" name="max_capacity">
+                                {{ object.max_capacity }}
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="date-field">Date :</label>
+                            <h4 id="date-field" style="color: black;" name="date">
+                                {{ object.date }}
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-6">
+                        <div class="form-group">
+                            <label for="user-field">User :</label>
+                            <h4 id="user-field" style="color: black;" name="user">
+                                {{ object.user }}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock contener %}
+{% block javascripts %}
+
+{% endblock javascripts %}

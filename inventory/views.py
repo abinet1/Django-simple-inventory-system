@@ -236,7 +236,6 @@ class Update_shelf(LoginRequiredMixin, UpdateView):
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Add and List request ++++++++++++++++++++++++++++++++++++++++++++
 class Add_request(LoginRequiredMixin, TemplateView):
     template_name = "inventory/request/add_request.html"
-    # model = inv_models.Request
     success_url = reverse_lazy("List_request")
 
     def get_context_data(self, **kwargs):
@@ -398,6 +397,17 @@ class Add_purchase_request(LoginRequiredMixin, TemplateView):
     model = inv_models.Purchase_Request
     template_name = "inventory/purchase_request/add_purchase_request.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "user":self.request.user,
+            "items":inv_models.Items.objects.all(),
+            "suppliers":auth_models.Supplier.objects.all(),
+            "purchase_request_notifications":inv_models.Purchase_Request.objects.filter(status="Pending"),
+        })
+        return context
+    
+
 class List_purchase_request(LoginRequiredMixin, ListView):
     model = inv_models.Purchase_Request
     template_name = "inventory/purchase_request/list_purchase_request.html"
@@ -414,7 +424,7 @@ class Edit_pusrchase(LoginRequiredMixin, TemplateView):
     model = inv_models.Purchase_Request
     template_name = "inventory/purchase_request/edit_purchase_request.html"
 
-class Detail_purchase(LoginRequiredMixin, DetailView):
+class Detail_purchase_request(LoginRequiredMixin, DetailView):
     model = inv_models.Purchase_Request
     template_name = "inventory/purchase_request/detail_purchase_request.html"
 
